@@ -89,6 +89,6 @@ export default {
 				},
 			},
 			$delete: ['boolean'],
-		};
+		} as unknown as Grammar;
 	},
 } as LanguageProto<'c'>;
