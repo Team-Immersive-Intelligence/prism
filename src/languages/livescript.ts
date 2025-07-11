@@ -1,4 +1,4 @@
-import type { LanguageProto } from '../types';
+import type { Grammar, LanguageProto } from '../types';
 
 export default {
 	id: 'livescript',
@@ -36,7 +36,7 @@ export default {
 					},
 				},
 				'string': /[\s\S]+/,
-			},
+			} as unknown as Grammar,
 		},
 		'string': [
 			{
