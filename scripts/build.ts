@@ -364,6 +364,7 @@ async function buildTypes () {
 async function buildJS () {
 	const input: Record<string, string> = {
 		'index': path.join(SRC_DIR, 'index.ts'),
+		'prism': path.join(SRC_DIR, 'prism.global.ts'),
 		'shared': path.join(SRC_DIR, 'shared.ts'),
 	};
 	for (const id of languageIds) {
@@ -386,7 +387,6 @@ async function buildJS () {
 
 	const defaultOutputOptions: OutputOptions = {
 		dir: './dist',
-		chunkFileNames: '_chunks/[name]-[hash].js',
 		validate: true,
 		sourcemap: 'hidden',
 	};
@@ -411,21 +411,6 @@ async function buildJS () {
 			outputOptions: {
 				...defaultOutputOptions,
 				dir: './dist/cjs',
-			},
-		},
-		global: {
-			rollupOptions: {
-				...defaultRollupOptions,
-				input: {
-					'prism': path.join(SRC_DIR, 'auto-start.ts'),
-				},
-			},
-			outputOptions: {
-				...defaultOutputOptions,
-				format: 'iife',
-				name: 'Prism',
-				exports: 'default',
-				extend: true,
 			},
 		},
 	};
