@@ -1,3 +1,4 @@
+import prism from '../../global';
 import { getParentPre, isActive } from '../../shared/dom-util';
 import { isNonNull, noop } from '../../shared/util';
 import { combineCallbacks } from '../../util/combine-callbacks';
@@ -199,7 +200,7 @@ export class LineNumbers {
 	}
 }
 
-export default {
+const Self = {
 	id: 'line-numbers',
 	plugin () {
 		return new LineNumbers();
@@ -272,3 +273,7 @@ export default {
 		return combineCallbacks(removeListener, completeHook);
 	},
 } as PluginProto<'line-numbers'>;
+
+export default Self;
+
+prism.components.add(Self);
