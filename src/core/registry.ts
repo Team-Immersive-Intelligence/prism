@@ -1,7 +1,14 @@
 import { kebabToCamelCase } from '../shared/util';
-import { forEach } from '../util/iterables';
+import { cloneGrammar } from '../util/extend';
+import { forEach, toArray } from '../util/iterables';
 import { extend } from '../util/language-util';
-import type { ComponentProto, Grammar } from '../types';
+import type {
+	ComponentProto,
+	Grammar,
+	GrammarOptions,
+	GrammarOptionsWithBase,
+	LanguageProto,
+} from '../types';
 import type { Prism } from './prism';
 
 interface Entry {
@@ -59,6 +66,13 @@ export class Registry {
 
 			// add aliases
 			forEach(proto.alias, alias => this.aliasMap.set(alias, id));
+
+			if ((proto as LanguageProto).base) {
+				proto.require = [
+					(proto as LanguageProto).base as ComponentProto,
+					...toArray(proto.require),
+				];
+			}
 
 			// dependencies
 			forEach(proto.require, register);
@@ -152,11 +166,6 @@ export class Registry {
 			return entry.evaluatedGrammar;
 		}
 
-		if (typeof grammar === 'object') {
-			// the grammar is a simple object, so we don't need to evaluate it
-			return (entry.evaluatedGrammar = grammar);
-		}
-
 		const required = (id: string): Grammar => {
 			const grammar = this.getLanguage(id);
 			if (!grammar) {
@@ -165,10 +174,33 @@ export class Registry {
 			return grammar;
 		};
 
-		return (entry.evaluatedGrammar = grammar({
-			getLanguage: required,
-			getOptionalLanguage: id => this.getLanguage(id),
-			extend: (id, ref) => extend(required(id), id, ref),
-		}));
+		const base = (entry?.proto as LanguageProto).base;
+		// We need this so that any code modifying the base grammar doesn't affect other instances
+		const baseGrammar = base && cloneGrammar(required(base.id), base.id);
+
+		let evaluatedGrammar: Grammar;
+		if (typeof grammar === 'object') {
+			// if the grammar is an object, we can use it directly
+			evaluatedGrammar = grammar;
+		}
+		else {
+			const options: GrammarOptions = {
+				getLanguage: required,
+				getOptionalLanguage: id => this.getLanguage(id),
+				extend: (id, ref) => extend(required(id), id, ref),
+				...(baseGrammar && { base: baseGrammar }),
+			};
+
+			const grammarFn = grammar as (
+				options: GrammarOptions | GrammarOptionsWithBase
+			) => Grammar;
+			evaluatedGrammar = grammarFn(options);
+		}
+
+		if (baseGrammar) {
+			evaluatedGrammar = extend(baseGrammar, base.id, evaluatedGrammar);
+		}
+
+		return (entry.evaluatedGrammar = evaluatedGrammar);
 	}
 }

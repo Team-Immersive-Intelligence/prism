@@ -1,11 +1,17 @@
-import type { Prism } from './core/prism';
 import type { TokenStream } from './core/classes/token';
+import type { Prism } from './core/prism';
 
 export interface GrammarOptions {
 	readonly getLanguage: (id: string) => Grammar;
 	readonly getOptionalLanguage: (id: string) => Grammar | undefined;
 	readonly extend: (id: string, ref: GrammarTokens) => Grammar;
 }
+
+// Overload for when base is required
+export interface GrammarOptionsWithBase extends GrammarOptions {
+	readonly base: Grammar;
+}
+
 export interface ComponentProtoBase<Id extends string = string> {
 	id: Id;
 	require?: ComponentProto | readonly ComponentProto[];
@@ -13,10 +19,27 @@ export interface ComponentProtoBase<Id extends string = string> {
 	alias?: string | readonly string[];
 	effect?: (Prism: Prism & { plugins: Record<KebabToCamelCase<Id>, {}> }) => () => void;
 }
-export interface LanguageProto<Id extends string = string> extends ComponentProtoBase<Id> {
+
+// For languages that extend a base language
+export interface LanguageProtoWithBase<Id extends string = string> extends ComponentProtoBase<Id> {
+	grammar: Grammar | ((options: GrammarOptionsWithBase) => Grammar);
+	plugin?: undefined;
+	base: LanguageProto; // Required base
+}
+
+// For languages that don't extend a base language
+export interface LanguageProtoWithoutBase<Id extends string = string>
+	extends ComponentProtoBase<Id> {
 	grammar: Grammar | ((options: GrammarOptions) => Grammar);
 	plugin?: undefined;
+	base?: never; // Explicitly no base allowed
 }
+
+// Union type that allows TypeScript to discriminate
+export type LanguageProto<Id extends string = string> =
+	| LanguageProtoWithBase<Id>
+	| LanguageProtoWithoutBase<Id>;
+
 type PluginType<Name extends string> = unknown;
 export interface PluginProto<Id extends string = string> extends ComponentProtoBase<Id> {
 	grammar?: undefined;
