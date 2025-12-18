@@ -35,7 +35,7 @@ export default {
 			'keyword': /^export(?=\s)/m,
 			'key': {
 				// Allow bare keys (without values)
-				pattern: /[a-z_]\w*(?=\s*=|(?<!=.*)$)/im,
+				pattern: /(?<=^[ \t]*)[a-z_]\w*(?=[ \t]*(?:=|$))/im,
 				alias: 'constant',
 			},
 			'value': [
