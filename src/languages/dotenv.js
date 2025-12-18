@@ -30,7 +30,8 @@ export default {
 
 		// Based on https://dotenvx.com/docs/env-file
 		return {
-			'comment': /(?:^|(?<=[\s"'`]))#(?![^\n"'`]*["'`])[^\r\n]*?(?=[ \t]*(?:\r?\n|$))/,
+			'comment':
+				/(?:^|(?<=[\s"'`]))#(?![^\n"'`]*["'`])[^\r\n \t]*(?:[ \t]+[^\r\n \t]+)*[ \t]*/,
 			'keyword': /^export(?=\s)/m,
 			'key': {
 				// Allow bare keys (without values)
