@@ -30,7 +30,7 @@ export default {
 
 		// Based on https://dotenvx.com/docs/env-file
 		return {
-			'comment': /(?:(?<=^)|(?<=[\s"'`]))#(?![^\n"'`]*["'`])[^\r\n]*?(?=[ \t]*(?:\r?\n|$))/,
+			'comment': /(?:^|(?<=[\s"'`]))#(?![^\n"'`]*["'`])[^\r\n]*?(?=[ \t]*(?:\r?\n|$))/,
 			'keyword': /^export(?=\s)/m,
 			'key': {
 				// Allow bare keys (without values)
@@ -53,7 +53,7 @@ export default {
 				},
 				{
 					pattern:
-						/(?<==\s*)(?:(['"`])((?:\\.|(?!\1)[\s\S])*?)\1|(?:\S.*?\S))(?=(?:\s+#.*)?\s*$)/m,
+						/(?<==\s*)(?:(['"`])((?:\\.|(?!\1)[\s\S])*?)\1|\S.*?\S)(?=(?:\s+#.*)?\s*$)/m,
 					alias: 'string',
 					inside: {
 						'command-substitution': {
@@ -74,7 +74,7 @@ export default {
 							// Variable expansion is disabled in strings enclosed in "'" (single quotes) and "`" (backticks)
 							pattern: /(?<!['`][\s\S]*)\$(\{[^{]+\}|[^\s"]+)/,
 							inside: {
-								'variable': /(?<=\$\{|\$(?!\{))[a-z_]\w*/i,
+								'variable': /(?<=\$\{|\$)[a-z_]\w*/i,
 								'default-value': commonPatterns(/(?<=(?::-|-)\s*)/),
 								'alternative-value': commonPatterns(/(?<=(?::\+|\+)\s*)/),
 								'variable-expansion-punctuation': {
