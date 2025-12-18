@@ -22,7 +22,7 @@ export default {
 				},
 				{
 					// Ignore leading and trailing whitespace characters
-					pattern: RegExp(prefix.source + /(\S[^}]*?\S)(?=\s*\})/.source),
+					pattern: RegExp(prefix.source + /\S[^}]*?\S(?=\s*\})/.source),
 					alias: 'string',
 				},
 			];
@@ -54,7 +54,7 @@ export default {
 				},
 				{
 					pattern:
-						/(?<==\s*)(?:(['"`])((?:\\.|(?!\1)[\s\S])*?)\1|\S.*?\S)(?=(?:\s+#.*)?\s*$)/m,
+						/(?<==\s*)(?:(['"`])(?:\\.|(?!\1)[\s\S])*?\1|\S.*?\S)(?=(?:\s+#.*)?\s*$)/m,
 					alias: 'string',
 					inside: {
 						'command-substitution': {
@@ -73,7 +73,7 @@ export default {
 						},
 						'variable-expansion': {
 							// Variable expansion is disabled in strings enclosed in "'" (single quotes) and "`" (backticks)
-							pattern: /(?<!['`][\s\S]*)\$(\{[^{]+\}|[^\s"]+)/,
+							pattern: /(?<!['`][\s\S]*)\$(?:\{[^{]+\}|[^\s"]+)/,
 							inside: {
 								'variable': /(?<=\$\{|\$)[a-z_]\w*/i,
 								'default-value': commonPatterns(/(?<=(?::-|-)\s*)/),
