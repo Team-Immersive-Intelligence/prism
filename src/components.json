@@ -387,6 +387,10 @@
 			"title": "DOT (Graphviz)",
 			"owner": "RunDevelopment"
 		},
+		"dotenv": {
+			"title": "Dotenv",
+			"owner": "dmitrysharabin"
+		},
 		"ebnf": {
 			"title": "EBNF",
 			"owner": "RunDevelopment"
