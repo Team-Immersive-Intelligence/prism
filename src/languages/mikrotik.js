@@ -389,7 +389,7 @@ export default {
 		// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-Datatypes
 		const DATA_TYPES = {
 			'internal-id': {
-				pattern: /(?<=\s)\*([1-9a-f][\da-f]*|0)\b/i,
+				pattern: /(?<=\s)\*(?:[1-9a-f][\da-f]*|0)\b/i,
 				alias: 'constant',
 			},
 			'ip-address': [
@@ -612,7 +612,7 @@ export default {
 					'array-item': [
 						{
 							// Array items with keys: "key"=value or key=value
-							pattern: /(?<=\s|^)([^;=]+=[^;]+)(?=;|$)/,
+							pattern: /(?<=\s|^)[^;=]+=[^;]+(?=;|$)/,
 							inside: {
 								'key': {
 									pattern: /(?:"[^"]+"|[^\s=][^=]*)(?==)/,
@@ -642,7 +642,7 @@ export default {
 						// TODO: Support strings
 
 						// Fallback for values without keys and unknown data type
-						/(?<=[\s{};]|^)([^;=]+)(?=;|$)/,
+						/(?<=[\s{};]|^)[^;=]+(?=;|$)/,
 					],
 					'array-item-delimiter': {
 						pattern: /;/,
@@ -652,7 +652,7 @@ export default {
 			},
 
 			'regex': {
-				pattern: /~\s*"((?:\\.|[^"\\])*)"/,
+				pattern: /~\s*"(?:\\.|[^"\\])*"/,
 				greedy: true,
 				inside: {
 					'operator': {
@@ -670,7 +670,7 @@ export default {
 				{
 					// Quoted variable after `:(global|local|set)`: `"var-name"`
 					// Use (?:[^"\\]|\\.)* instead of [^"\\]*(?:\\.[^"\\]*)* to avoid exponential backtracking
-					pattern: /(?<=:(?:global|local|set)\s+)("(?:[^"\\]|\\.)*")/,
+					pattern: /(?<=:(?:global|local|set)\s+)"(?:[^"\\]|\\.)*"/,
 					greedy: true,
 				},
 				{
@@ -734,7 +734,7 @@ export default {
 					},
 					// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-ConstantEscapeSequences
 					'escape-sequence': {
-						pattern: /\\(["\\nrt$_abfv]|[0-9A-F]{2})/,
+						pattern: /\\(?:["\\nrt$_abfv]|[0-9A-F]{2})/,
 						alias: 'char',
 					},
 				},
@@ -742,7 +742,7 @@ export default {
 
 			'keyword': [
 				// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-Whitespacebetweentokens
-				/\b(from|in|on-error|step|to)(?==)/,
+				/\b(?:from|in|on-error|step|to)(?==)/,
 				{
 					// `else` could be part of the previous pattern, but we need to assign it a different alias;
 					// and since it must follow by `=`, we can't make it part of the general keywords pattern below
@@ -751,7 +751,7 @@ export default {
 				},
 				{
 					// Loops and conditional statements (https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-Loopsandconditionalstatements)
-					pattern: /\b(do|for|foreach|if|while)(?=[\s{=[(])/,
+					pattern: /\b(?:do|for|foreach|if|while)(?=[\s{=[(])/,
 					alias: 'control-flow',
 				},
 				{
@@ -863,7 +863,7 @@ export default {
 				},
 				{
 					// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-LogicalOperators
-					pattern: /!|&&|\|\||\b(and|in|or)\b/,
+					pattern: /!|&&|\|\||\b(?:and|in|or)\b/,
 					alias: 'logical-operator',
 				},
 				{
