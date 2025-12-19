@@ -40,11 +40,6 @@ export default {
 			},
 			'value': [
 				{
-					// Some implementations support empty values that are interpreted as empty strings
-					pattern: /(?<==)(?=\s*$)/,
-					alias: 'empty',
-				},
-				{
 					pattern: /(?<==\s*)(?:-?[1-9]\d*|0)(?:\.\d+)?(?=\s*$)/,
 					alias: 'number',
 				},

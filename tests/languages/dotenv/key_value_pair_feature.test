@@ -36,7 +36,7 @@ TABS_AND_SPACES   		=   	value-with-tabs-and-spaces
 	["key", "TIMEOUT"], ["assignment-operator", "="], ["value", "30.5"],
 
 	["key", "BARE_KEY"],
-	["key", "EMPTY_STRING"], ["assignment-operator", "="], ["value", ""],
+	["key", "EMPTY_STRING"], ["assignment-operator", "="],
 	["comment", "#DISABLED_VAR=value"],
 
 	["key", "APP_NAME"],
