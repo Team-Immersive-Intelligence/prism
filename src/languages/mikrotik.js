@@ -184,8 +184,6 @@ export default {
 			},
 		];
 
-		// ============== Helper functions ==============
-
 		/**
 		 * @param {string} alias
 		 * @param {string|string[]|undefined} to
@@ -202,12 +200,10 @@ export default {
 		/**
 		 * Converts DATA_TYPES entries into pattern objects with aliases.
 		 *
-		 * @param {string[]} [excludeKeys] Keys to exclude from the result
 		 * @returns {Array}
 		 */
-		function getDataTypesPatterns (excludeKeys = []) {
+		function getDataTypesPatterns () {
 			return Object.entries(DATA_TYPES)
-				.filter(([key]) => !excludeKeys.includes(key))
 				.map(([key, value]) => {
 					if (value instanceof RegExp) {
 						return {
@@ -288,8 +284,6 @@ export default {
 			);
 		}
 
-		// ============== End of helper functions ==============
-
 		return {
 			'comment': {
 				pattern: /(?<=^|\s)#.*$/m,
@@ -336,16 +330,11 @@ export default {
 							},
 						},
 						// Array items without keys: number, boolean, etc.
-						...getDataTypesPatterns().map(v => {
-							let source = v.pattern.source.replace(/^\^/, '');
-							source = source.replace(/\(\?<=\\s\|=\|\^\)/, '(?<=\\s|=|^|\\{|;)');
-
-							return {
-								...v,
-								// Add array item boundary: ensure it ends with ; or it's the last item in the array
-								pattern: new RegExp(`${source}(?=;|$)`, v.pattern.flags),
-							};
-						}),
+						// Append (?=;|$) so each value is bounded by the next delimiter or end of array.
+						...getDataTypesPatterns().map(v => ({
+							...v,
+							pattern: new RegExp(`${v.pattern.source}(?=;|$)`, v.pattern.flags),
+						})),
 						// TODO: Support strings
 
 						// Fallback for values without keys and unknown data type
@@ -414,7 +403,7 @@ export default {
 					/(?<!\$\s?)(?<!\b:(?:global|local|set)\s)(")(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
 				greedy: true,
 				inside: {
-					// Expressions inside strings: `$[...]` and  `$(...)`
+					// Expressions inside strings: `$[...]` and `$(...)`
 					// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-ConcatenationOperators
 					'expression': {
 						pattern: new RegExp(
@@ -546,7 +535,7 @@ export default {
 				},
 				{
 					// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-LogicalOperators
-					pattern: /!|&&|\|\||\b(?:and|in|or)\b/,
+					pattern: /!(?!=)|&&|\|\||\b(?:and|in|or)\b/,
 					alias: 'logical-operator',
 				},
 				{
