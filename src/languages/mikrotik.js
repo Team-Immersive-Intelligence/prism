@@ -19,6 +19,19 @@ export default {
 		// References:
 		//   https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting
 		//   https://help.mikrotik.com/docs/spaces/ROS/pages/328134/Command+Line+Interface
+		//
+		// Known limitations (require semantic analysis beyond regex):
+		//   1. Multi-line arrays: `{ 1;\n2;\n3 }` is not highlighted as an array.
+		//      The pattern intentionally excludes newlines to avoid misidentifying
+		//      multi-line code blocks (e.g., `do={ ... }`) as arrays.
+		//   2. Sub-menu names in space form: `/tool e-mail send` — only the first
+		//      path component (`tool`) is highlighted; the rest look like bare words.
+		//      Fixing this would require a full vocabulary list of all sub-menu names.
+		//   3. Menu commands in value position: `action=add` — `add` is highlighted
+		//      as a command even though it is used as a parameter value here.
+		//      There is no regex-based way to distinguish the two contexts.
+		//   4. `!` in topic specs: `topics=!ppp` — `!` is highlighted as a logical
+		//      operator. The negation-in-topic-spec usage is syntactically identical.
 
 		// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-Globalcommands
 		const GLOBAL_COMMANDS = [
@@ -284,6 +297,38 @@ export default {
 			);
 		}
 
+		// Shared inside grammar for string tokens (top-level strings and array string items)
+		const STRING_INSIDE = {
+			// Expressions inside strings: `$[...]` and `$(...)`
+			// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-ConcatenationOperators
+			'expression': {
+				pattern: new RegExp(
+					buildNestedRegex('$(', ')').source + '|' + buildNestedRegex('$[', ']').source
+				),
+				inside: {
+					'begin-of-expression': {
+						pattern: /^\$[[(]/,
+						alias: 'punctuation',
+					},
+					'end-of-expression': {
+						pattern: /[\])]$/,
+						alias: 'punctuation',
+					},
+					$rest: 'mikrotik',
+				},
+			},
+			'variable': VARIABLE_PATTERNS,
+			'substitution-operator': {
+				pattern: /\$$/,
+				alias: 'operator',
+			},
+			// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-ConstantEscapeSequences
+			'escape-sequence': {
+				pattern: /\\(?:["\\nrt$_abfv]|[0-9A-F]{2})/,
+				alias: 'char',
+			},
+		};
+
 		return {
 			'comment': {
 				pattern: /(?<=^|\s)#.*$/m,
@@ -313,7 +358,8 @@ export default {
 					'array-item': [
 						{
 							// Array items with keys: "key"=value or key=value
-							pattern: /(?<=\s|^)[^;=]+=[^;]+(?=;|$)/,
+							// `(?<=[\s;]|^)` accounts for `;` separating items (e.g., the second item in `{"k1"=v1;"k2"=v2}`)
+							pattern: /(?<=[\s;]|^)[^;=]+=[^;]+(?=;|$)/,
 							inside: {
 								'key': {
 									pattern: /(?:"[^"]+"|[^\s=][^=]*)(?==)/,
@@ -335,7 +381,12 @@ export default {
 							...v,
 							pattern: new RegExp(`${v.pattern.source}(?=;|$)`, v.pattern.flags),
 						})),
-						// TODO: Support strings
+						// String array items: "hello", "escaped \n", "interpolated $var"
+						{
+							pattern: /"(?:\\.|[^"\\])*"(?=;|$)/,
+							alias: 'string',
+							inside: STRING_INSIDE,
+						},
 
 						// Fallback for values without keys and unknown data type
 						/(?<=[\s{};]|^)[^;=]+(?=;|$)/,
@@ -411,38 +462,7 @@ export default {
 				pattern:
 					/(?<!\$\s?)(?<!\b:(?:global|local|set)\s)(")(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
 				greedy: true,
-				inside: {
-					// Expressions inside strings: `$[...]` and `$(...)`
-					// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-ConcatenationOperators
-					'expression': {
-						pattern: new RegExp(
-							buildNestedRegex('$(', ')').source +
-								'|' +
-								buildNestedRegex('$[', ']').source
-						),
-						inside: {
-							'begin-of-expression': {
-								pattern: /^\$[[(]/,
-								alias: 'punctuation',
-							},
-							'end-of-expression': {
-								pattern: /[\])]$/,
-								alias: 'punctuation',
-							},
-							$rest: 'mikrotik',
-						},
-					},
-					'variable': VARIABLE_PATTERNS,
-					'substitution-operator': {
-						pattern: /\$$/,
-						alias: 'operator',
-					},
-					// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-ConstantEscapeSequences
-					'escape-sequence': {
-						pattern: /\\(?:["\\nrt$_abfv]|[0-9A-F]{2})/,
-						alias: 'char',
-					},
-				},
+				inside: STRING_INSIDE,
 			},
 
 			'keyword': [
