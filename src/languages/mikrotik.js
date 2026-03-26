@@ -6,7 +6,7 @@ export default {
 	grammar () {
 		// MikroTik RouterOS Scripting Language Definition
 		//
-		// This definition highlights RouterOS scripts (.rsc files) using structural
+		// This definition highlights RouterOS scripts using structural
 		// syntax patterns rather than exhaustive keyword lists. RouterOS constructs
 		// are syntactically self-describing:
 		//   - Commands are colon-prefixed  → :put, :global, :if
