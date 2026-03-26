@@ -1,0 +1,62 @@
+find name~"^[a-z]+\d?$"
+find name~"prefix$varName\.\d+"
+find src-address~"(10|192)\."
+
+----------------------------------------------------
+
+[
+	["command", "find"],
+	["regex", [
+		["parameter", "name"],
+		["operator", "~"],
+		["punctuation", "\""],
+		["anchor", "^"],
+		["char-class", [
+			["char-class-punctuation", "["],
+			["range", [
+				"a",
+				["range-punctuation", "-"],
+				"z"
+			]],
+			["char-class-punctuation", "]"]
+		]],
+		["quantifier", "+"],
+		["char-set", "\\d"],
+		["quantifier", "?"],
+		["anchor", "$"],
+		["punctuation", "\""]
+	]],
+
+	["command", "find"],
+	["regex", [
+		["parameter", "name"],
+		["operator", "~"],
+		["punctuation", "\""],
+		"prefix",
+		["anchor", "$"],
+		["variable", "varName"],
+		["special-escape", "\\."],
+		["char-set", "\\d"],
+		["quantifier", "+"],
+		["punctuation", "\""]
+	]],
+
+	["command", "find"],
+	["regex", [
+		["parameter", "src-address"],
+		["operator", "~"],
+		["punctuation", "\""],
+		["group", ["("]],
+		"10",
+		["alternation", "|"],
+		"192",
+		["group", ")"],
+		["special-escape", "\\."],
+		["punctuation", "\""]
+	]]
+]
+
+----------------------------------------------------
+
+Tests that the regex language is properly embedded inside MikroTik regex strings
+via `$rest: 'regex'`.
