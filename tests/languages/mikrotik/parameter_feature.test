@@ -1,0 +1,75 @@
+add src-address=10.0.0.1 dst-address=10.0.0.2
+print brief
+print detail
+print count-only
+print from=0
+print file=backup.txt
+/ip firewall filter print where src-address=10.0.0.1
+[find name~"test"]
+[find interface~"ether"]
+
+----------------------------------------------------
+
+[
+	["command", "add"],
+	["parameter", "src-address"],
+	["operator", "="],
+	["ip-address", "10.0.0.1"],
+	["parameter", "dst-address"],
+	["operator", "="],
+	["ip-address", "10.0.0.2"],
+
+	["command", "print"],
+	["parameter", "brief"],
+
+	["command", "print"],
+	["parameter", "detail"],
+
+	["command", "print"],
+	["parameter", "count-only"],
+
+	["command", "print"],
+	["keyword", "from"],
+	["operator", "="],
+	["number", "0"],
+
+	["command", "print"],
+	["parameter", "file"],
+	["operator", "="],
+	"backup.txt\r\n",
+
+	["prefix", "/"],
+	["command", "ip"],
+	" firewall filter ",
+	["command", "print"],
+	["parameter", "where"],
+	["parameter", "src-address"],
+	["operator", "="],
+	["ip-address", "10.0.0.1"],
+
+	["punctuation", "["],
+	["command-substitution", [
+		["command", "find"],
+		["regex", [
+			["parameter", "name"],
+			["operator", "~"],
+			["punctuation", "\""],
+			"test",
+			["punctuation", "\""]
+		]]
+	]],
+	["punctuation", "]"],
+
+	["punctuation", "["],
+	["command-substitution", [
+		["command", "find"],
+		["regex", [
+			["parameter", "interface"],
+			["operator", "~"],
+			["punctuation", "\""],
+			"ether",
+			["punctuation", "\""]
+		]]
+	]],
+	["punctuation", "]"]
+]

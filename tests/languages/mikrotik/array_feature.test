@@ -1,0 +1,68 @@
+:local arr {1;2;3};
+:local arr2 {"key1"=val1;"key2"=val2};
+:local arr3 {true;false;true};
+:local arr4 {192.168.1.1;10.0.0.1};
+
+----------------------------------------------------
+
+[
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "arr"],
+	["array", [
+		["punctuation", "{"],
+		["array-item", "1"],
+		["array-item-delimiter", ";"],
+		["array-item", "2"],
+		["array-item-delimiter", ";"],
+		["array-item", "3"],
+		["punctuation", "}"]
+	]],
+	["end-of-command", ";"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "arr2"],
+	["array", [
+		["punctuation", "{"],
+		["array-item", [
+			["key", [
+				["punctuation", "\""],
+				"key1",
+				["punctuation", "\""]
+			]],
+			["operator", "="],
+			["value", "val1"]
+		]],
+		["array-item-delimiter", ";"],
+		"\"key2\"=val2",
+		["punctuation", "}"]
+	]],
+	["end-of-command", ";"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "arr3"],
+	["array", [
+		["punctuation", "{"],
+		["array-item", "true"],
+		["array-item-delimiter", ";"],
+		["array-item", "false"],
+		["array-item-delimiter", ";"],
+		["array-item", "true"],
+		["punctuation", "}"]
+	]],
+	["end-of-command", ";"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "arr4"],
+	["array", [
+		["punctuation", "{"],
+		["array-item", "192.168.1.1"],
+		["array-item-delimiter", ";"],
+		["array-item", "10.0.0.1"],
+		["punctuation", "}"]
+	]],
+	["end-of-command", ";"]
+]

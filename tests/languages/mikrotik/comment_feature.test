@@ -1,0 +1,16 @@
+# This is a comment
+:put "hello" # inline comment
+	# indented comment
+
+----------------------------------------------------
+
+[
+	["comment", "# This is a comment"],
+
+	["prefix", ":"],
+	["command", "put"],
+	["string", ["\"hello\""]],
+	["comment", "# inline comment"],
+
+	["comment", "# indented comment"]
+]

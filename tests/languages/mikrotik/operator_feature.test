@@ -1,0 +1,393 @@
+:local x ($a + $b)
+:local y ($a - $b)
+:local z ($a * $b)
+:local w ($a / $b)
+:local r ($a % $b)
+:if ($a = $b) do={}
+:if ($a != $b) do={}
+:if ($a < $b) do={}
+:if ($a > $b) do={}
+:if ($a <= $b) do={}
+:if ($a >= $b) do={}
+:if (!$flag) do={}
+:if ($a && $b) do={}
+:if ($a || $b) do={}
+:if ($a and $b) do={}
+:if ($a or $b) do={}
+:if ($x in $list) do={}
+:local s ($a . $b)
+:local arr ($a , $b)
+:local v $arr->0
+:local bits ($a & $b)
+:local bits2 ($a | $b)
+:local bits3 (~$a)
+:local bits4 ($a ^ $b)
+:local bits5 ($a << 2)
+:local bits6 ($a >> 2)
+
+----------------------------------------------------
+
+[
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "x"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "+"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "y"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "-"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "z"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "*"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "w"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "/"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "r"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "%"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "="],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "!="],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "<"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", ">"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "<="],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", ">="],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "!"],
+		["operator", "$"],
+		["variable", "flag"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "&&"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "||"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "and"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "or"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "x"],
+		["operator", "in"],
+		["operator", "$"],
+		["variable", "list"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "s"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "."],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "arr"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", ","],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "v"],
+	["operator", "$"],
+	["variable", "arr"],
+	["operator", "->"],
+	["number", "0"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "bits"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "&"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "bits2"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "|"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "bits3"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "~"],
+		["operator", "$"],
+		["variable", "a"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "bits4"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "^"],
+		["operator", "$"],
+		["variable", "b"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "bits5"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", "<<"],
+		["number", "2"]
+	]],
+	["operator", ")"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "bits6"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "a"],
+		["operator", ">>"],
+		["number", "2"]
+	]],
+	["operator", ")"]
+]

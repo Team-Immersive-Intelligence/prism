@@ -1,0 +1,56 @@
+:if ($x > 0) do={:put "yes"} else={:put "no"}
+:local result;
+/tool e-mail send \
+    to="user@example.com" \
+    subject="test"
+
+----------------------------------------------------
+
+[
+	["prefix", ":"],
+	["keyword", "if"],
+	["operator", "("],
+	["subexpression", [
+		["operator", "$"],
+		["variable", "x"],
+		["operator", ">"],
+		["number", "0"]
+	]],
+	["operator", ")"],
+	["keyword", "do"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["prefix", ":"],
+	["command", "put"],
+	["string", ["\"yes\""]],
+	["end-of-scope", "}"],
+	["keyword", "else"],
+	["operator", "="],
+	["begin-of-scope", "{"],
+	["prefix", ":"],
+	["command", "put"],
+	["string", ["\"no\""]],
+	["end-of-scope", "}"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "result"],
+	["end-of-command", ";"],
+
+	["prefix", "/"],
+	["command", "tool"],
+	["number", "e"],
+	["operator", "-"],
+	"mail ",
+	["command", "send"],
+	["line-joining", "\\"],
+
+	["keyword", "to"],
+	["operator", "="],
+	["string", ["\"user@example.com\""]],
+	["line-joining", "\\"],
+
+	["parameter", "subject"],
+	["operator", "="],
+	["string", ["\"test\""]]
+]

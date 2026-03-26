@@ -348,14 +348,22 @@ export default {
 			},
 
 			'regex': {
-				pattern: /~\s*"(?:\\.|[^"\\])*"/,
+				// Optionally captures the parameter name before `~`: `name~"pattern"`
+				pattern: /(?:(?<=\s)[a-z][\w-]+)?~"(?:\\.|[^"\\])*"/i,
 				greedy: true,
 				inside: {
+					'parameter': {
+						// Parameter name before the `~` operator: `name` in `name~"pattern"`
+						pattern: /^[a-z][\w-]+/i,
+						alias: 'property',
+					},
 					'operator': {
 						pattern: /^~/,
 						alias: 'regex-operator',
 					},
 					'punctuation': /^"|"$/,
+					// Variables are interpolated inside regex strings, just like in regular strings
+					'variable': VARIABLE_PATTERNS,
 					$rest: 'regex',
 				},
 			},
@@ -370,8 +378,9 @@ export default {
 					greedy: true,
 				},
 				{
-					// Unquoted variable after `:(global|local|set)`: `varName`
-					pattern: /(?<=:(?:global|local|set)\s+)[A-Za-z\d]+/,
+					// Unquoted variable in declaration or loop: `varName`
+					// Covers `:global varName`, `:local varName`, `:set varName`, `:for varName`, `:foreach varName`
+					pattern: /(?<=:(?:for|foreach|global|local|set)\s+)[A-Za-z\d]+/,
 					greedy: true,
 				},
 
@@ -479,9 +488,10 @@ export default {
 			'command': [
 				{
 					// Generic menu path: any word (including hyphens) after `/`
-					// Covers all RouterOS paths including new ones added in future releases
+					// Requires the first character to be a letter to avoid consuming digit-only
+					// sequences that are part of dates (jan/01/2024) or IP prefixes (10.0.0.0/24)
 					// Examples: /ip, /interface, /dhcp-server, /routing/bgp
-					pattern: /(?<=\/)[\w-]+/,
+					pattern: /(?<=\/)[a-z][\w-]*/i,
 					alias: ['path', 'function'],
 				},
 				{

@@ -1,0 +1,82 @@
+:put "hello"
+:global x
+:local y
+:set z 1
+:log info "message"
+:return $result
+/ip/firewall/filter
+/ip firewall filter
+add name=test
+remove [find name=test]
+print brief
+set [find] disabled=yes
+
+----------------------------------------------------
+
+[
+	["prefix", ":"],
+	["command", "put"],
+	["string", ["\"hello\""]],
+
+	["prefix", ":"],
+	["command", "global"],
+	["variable", "x"],
+
+	["prefix", ":"],
+	["command", "local"],
+	["variable", "y"],
+
+	["prefix", ":"],
+	["command", "set"],
+	["variable", "z"],
+	["number", "1"],
+
+	["prefix", ":"],
+	["command", "log"],
+	" info ",
+	["string", ["\"message\""]],
+
+	["prefix", ":"],
+	["command", "return"],
+	["operator", "$"],
+	["variable", "result"],
+
+	["prefix", "/"],
+	["command", "ip"],
+	["prefix", "/"],
+	["command", "firewall"],
+	["prefix", "/"],
+	["command", "filter"],
+
+	["prefix", "/"],
+	["command", "ip"],
+	" firewall filter\r\n",
+
+	["command", "add"],
+	["parameter", "name"],
+	["operator", "="],
+	"test\r\n",
+
+	["command", "remove"],
+	["punctuation", "["],
+	["command-substitution", [
+		["command", "find"],
+		["parameter", "name"],
+		["operator", "="],
+		"test"
+	]],
+	["punctuation", "]"],
+
+	["command", "print"],
+	["parameter", "brief"],
+
+	["command", "set"],
+	["punctuation", "["],
+	["command-substitution", [
+		["command", "find"]
+	]],
+	["punctuation", "]"],
+	["parameter", "disabled"],
+	["operator", "="],
+	["property-value", "yes"]
+]

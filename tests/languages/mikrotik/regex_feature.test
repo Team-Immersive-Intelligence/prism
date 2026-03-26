@@ -1,0 +1,48 @@
+[find name~"test"]
+[find name~"^prefix"]
+[find name~"\\.$currentQueue$"]
+
+----------------------------------------------------
+
+[
+	["punctuation", "["],
+	["command-substitution", [
+		["command", "find"],
+		["regex", [
+			["parameter", "name"],
+			["operator", "~"],
+			["punctuation", "\""],
+			"test",
+			["punctuation", "\""]
+		]]
+	]],
+	["punctuation", "]"],
+
+	["punctuation", "["],
+	["command-substitution", [
+		["command", "find"],
+		["regex", [
+			["parameter", "name"],
+			["operator", "~"],
+			["punctuation", "\""],
+			"^prefix",
+			["punctuation", "\""]
+		]]
+	]],
+	["punctuation", "]"],
+
+	["punctuation", "["],
+	["command-substitution", [
+		["command", "find"],
+		["regex", [
+			["parameter", "name"],
+			["operator", "~"],
+			["punctuation", "\""],
+			"\\\\.$",
+			["variable", "currentQueue"],
+			"$",
+			["punctuation", "\""]
+		]]
+	]],
+	["punctuation", "]"]
+]
