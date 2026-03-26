@@ -521,7 +521,9 @@ export default {
 					alias: ['print-parameter', 'property'],
 				},
 				{
-					pattern: new RegExp(`(?<=\\s)(?:${PRINT_PARAMETERS.join('|')})(?![\\w-])(?!\\s*=)`),
+					pattern: new RegExp(
+						`(?<=\\s)(?:${PRINT_PARAMETERS.join('|')})(?![\\w-])(?!\\s*=)`
+					),
 					alias: ['print-parameter', 'property'],
 				},
 				{
