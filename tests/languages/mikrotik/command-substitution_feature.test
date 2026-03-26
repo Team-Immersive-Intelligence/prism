@@ -45,9 +45,7 @@
 	["command-substitution", [
 		["prefix", "/"],
 		["command", "ip"],
-		" firewall address",
-		["operator", "-"],
-		"list ",
+		" firewall address-list ",
 		["command", "find"],
 		["parameter", "list"],
 		["operator", "="],

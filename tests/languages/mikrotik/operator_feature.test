@@ -24,6 +24,7 @@
 :local bits4 ($a ^ $b)
 :local bits5 ($a << 2)
 :local bits6 ($a >> 2)
+add src-address=192.168.1.1
 
 ----------------------------------------------------
 
@@ -389,5 +390,10 @@
 		["operator", ">>"],
 		["number", "2"]
 	]],
-	["operator", ")"]
+	["operator", ")"],
+
+	["command", "add"],
+	["parameter", "src-address"],
+	["operator", "="],
+	["ip-address", "192.168.1.1"]
 ]

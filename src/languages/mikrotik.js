@@ -32,6 +32,10 @@ export default {
 		//      There is no regex-based way to distinguish the two contexts.
 		//   4. `!` in topic specs: `topics=!ppp` — `!` is highlighted as a logical
 		//      operator. The negation-in-topic-spec usage is syntactically identical.
+		//   5. Bare property names without `=`: `get $id target-address` — `target-address`
+		//      is not highlighted as a parameter because the generic parameter pattern
+		//      requires `(?==)`. A bare hyphenated-word pattern would conflict with
+		//      hyphenated menu commands (e.g., `monitor-traffic`).
 
 		// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-Globalcommands
 		const GLOBAL_COMMANDS = [
@@ -559,8 +563,11 @@ export default {
 				},
 				{
 					// https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting#Scripting-ArithmeticOperators
-					// Note: `-` can be both unary (e.g., `-42`) and binary (e.g., `$var - 1`)
-					pattern: /[%*/+-]/,
+					// `-` is excluded when flanked by letters on both sides to avoid matching hyphens
+					// in kebab-case identifiers (e.g., `target-address`, `src-address`).
+					// It still matches unary (`-42`), binary with spaces (`$a - $b`), and
+					// binary between non-letter tokens (`a-3` where `a` is a hex digit).
+					pattern: /[%*/+]|(?<![a-z])-|-(?![a-z])/i,
 					alias: 'arithmetic-operator',
 				},
 				{
