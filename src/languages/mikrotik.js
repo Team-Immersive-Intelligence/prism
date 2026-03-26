@@ -179,9 +179,12 @@ export default {
 				},
 			],
 			// Number pattern: matches positive numbers only (hexadecimal: 0-9, a-f)
-			// The minus sign (-) is handled by the arithmetic-operator pattern
-			// This allows proper distinction between binary (var -1) and unary (-1) minus
-			'number': /\b(?:[1-9a-f][\da-f]*|0)\b/i,
+			// The minus sign (-) is handled by the arithmetic-operator pattern.
+			// Letter-starting hex numbers use (?!-[a-z]) to avoid consuming the first letter of
+			// kebab-case identifiers (e.g. `e-mail`): without this, `e` would be matched as a
+			// number token, leaving `-mail` as a new segment where `-` would falsely match as an
+			// arithmetic operator.
+			'number': /\b(?:[1-9][\da-f]*|[a-f][\da-f]*(?!-[a-z])|0)\b/i,
 
 			'boolean': /\b(?:false|true)\b/,
 		};
