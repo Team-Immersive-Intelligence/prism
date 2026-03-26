@@ -424,21 +424,10 @@ export default {
 					// Unlike VARIABLE_PATTERNS (which use lookbehind and leave `$` as a text node),
 					// these patterns include `$` in the match so it isn't claimed by the regex
 					// language's `anchor` token via `$rest: 'regex'`.
+					// Only simple `$varName` references are supported here. Quoted variable references
+					// (`$"var-name"`) would appear as `$\"var-name\"` inside a regex string, but
+					// this is too niche to support now — add if real-world demand arises.
 					'variable': [
-						// FIXME: Unreachable — the outer regex pattern ~"(?:\\.|[^"\\])*" terminates
-						// at the first unescaped `"`, so `$"..."` (quoted variable) can never appear
-						// in the inner content. To support this, the outer pattern must first be
-						// updated to handle `$"..."` sequences.
-						// {
-						// 	pattern: /\$"(?:[^"\\]|\\.)*"/,
-						// 	greedy: true,
-						// 	inside: {
-						// 		'substitution-operator': {
-						// 			pattern: /^\$/,
-						// 			alias: 'operator',
-						// 		},
-						// 	},
-						// },
 						{
 							pattern: /\$[a-z\d]+/i,
 							greedy: true,
