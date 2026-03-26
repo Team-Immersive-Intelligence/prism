@@ -65,3 +65,9 @@
 	]],
 	["string", ["\"trailing dollar: $\""]]
 ]
+
+----------------------------------------------------
+
+Tests the `string` token: plain strings, escape sequences (`\n`, `\r`, `\t`, `\\`,
+`\"`, `\$`, `\_`, octal), variable interpolation (`$var`), quoted variable names
+(`$"var-name"`), command substitution inside strings, and a trailing literal `$`.

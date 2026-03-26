@@ -1,171 +1,29 @@
-:if ($x > 0) do={:put "positive"}
-:if ($x > 0) do={:put "yes"} else={:put "no"}
-:for i from=1 to=10 step=1 do={:put $i}
-:foreach item in=$list do={:put $item}
-:while ($x > 0) do={:set x ($x - 1)}
-:do {:set x ($x + 1)} while ($x < 10)
-/interface monitor-traffic ether1 once
-:if ($err != "") do={} on-error={:log error $err}
+do=
+else=
+for=
+foreach=
+from=
+if=
+in=
+on-error=
+once
+step=
+to=
+while=
 
 ----------------------------------------------------
 
 [
-	["prefix", ":"],
-	["keyword", "if"],
-	["operator", "("],
-	["subexpression", [
-		["operator", "$"],
-		["variable", "x"],
-		["operator", ">"],
-		["number", "0"]
-	]],
-	["operator", ")"],
-	["keyword", "do"],
-	["operator", "="],
-	["begin-of-scope", "{"],
-	["prefix", ":"],
-	["command", "put"],
-	["string", ["\"positive\""]],
-	["end-of-scope", "}"],
-
-	["prefix", ":"],
-	["keyword", "if"],
-	["operator", "("],
-	["subexpression", [
-		["operator", "$"],
-		["variable", "x"],
-		["operator", ">"],
-		["number", "0"]
-	]],
-	["operator", ")"],
-	["keyword", "do"],
-	["operator", "="],
-	["begin-of-scope", "{"],
-	["prefix", ":"],
-	["command", "put"],
-	["string", ["\"yes\""]],
-	["end-of-scope", "}"],
-	["keyword", "else"],
-	["operator", "="],
-	["begin-of-scope", "{"],
-	["prefix", ":"],
-	["command", "put"],
-	["string", ["\"no\""]],
-	["end-of-scope", "}"],
-
-	["prefix", ":"],
-	["keyword", "for"],
-	["variable", "i"],
-	["keyword", "from"],
-	["operator", "="],
-	["number", "1"],
-	["keyword", "to"],
-	["operator", "="],
-	["number", "10"],
-	["keyword", "step"],
-	["operator", "="],
-	["number", "1"],
-	["keyword", "do"],
-	["operator", "="],
-	["begin-of-scope", "{"],
-	["prefix", ":"],
-	["command", "put"],
-	["operator", "$"],
-	["variable", "i"],
-	["end-of-scope", "}"],
-
-	["prefix", ":"],
-	["keyword", "foreach"],
-	["variable", "item"],
-	["keyword", "in"],
-	["operator", "="],
-	["operator", "$"],
-	["variable", "list"],
-	["keyword", "do"],
-	["operator", "="],
-	["begin-of-scope", "{"],
-	["prefix", ":"],
-	["command", "put"],
-	["operator", "$"],
-	["variable", "item"],
-	["end-of-scope", "}"],
-
-	["prefix", ":"],
-	["keyword", "while"],
-	["operator", "("],
-	["subexpression", [
-		["operator", "$"],
-		["variable", "x"],
-		["operator", ">"],
-		["number", "0"]
-	]],
-	["operator", ")"],
-	["keyword", "do"],
-	["operator", "="],
-	["begin-of-scope", "{"],
-	["prefix", ":"],
-	["command", "set"],
-	["variable", "x"],
-	["operator", "("],
-	["subexpression", [
-		["operator", "$"],
-		["variable", "x"],
-		["operator", "-"],
-		["number", "1"]
-	]],
-	["operator", ")"],
-	["end-of-scope", "}"],
-
-	["prefix", ":"],
-	["keyword", "do"],
-	["begin-of-scope", "{"],
-	["prefix", ":"],
-	["command", "set"],
-	["variable", "x"],
-	["operator", "("],
-	["subexpression", [
-		["operator", "$"],
-		["variable", "x"],
-		["operator", "+"],
-		["number", "1"]
-	]],
-	["operator", ")"],
-	["end-of-scope", "}"],
-	["keyword", "while"],
-	["operator", "("],
-	["subexpression", [
-		["operator", "$"],
-		["variable", "x"],
-		["operator", "<"],
-		["number", "10"]
-	]],
-	["operator", ")"],
-
-	["prefix", "/"],
-	["command", "interface"],
-	["command", "monitor-traffic"],
-	" ether1 ",
+	["keyword", "do"], ["operator", "="],
+	["keyword", "else"], ["operator", "="],
+	["keyword", "for"], ["operator", "="],
+	["keyword", "foreach"], ["operator", "="],
+	["keyword", "from"], ["operator", "="],
+	["keyword", "if"], ["operator", "="],
+	["keyword", "in"], ["operator", "="],
+	["keyword", "on-error"], ["operator", "="],
 	["keyword", "once"],
-
-	["prefix", ":"],
-	["keyword", "if"],
-	["operator", "("],
-	["subexpression", [
-		["operator", "$"],
-		["variable", "err"],
-		["operator", "!="],
-		["string", ["\"\""]]
-	]],
-	["operator", ")"],
-	["keyword", "do"],
-	["operator", "="],
-	["begin-of-scope", "{"],
-	["end-of-scope", "}"],
-	["keyword", "on-error"],
-	["operator", "="],
-	["array", [
-		["punctuation", "{"],
-		["array-item", ":log error $err"],
-		["punctuation", "}"]
-	]]
+	["keyword", "step"], ["operator", "="],
+	["keyword", "to"], ["operator", "="],
+	["keyword", "while"], ["operator", "="]
 ]

@@ -1,6 +1,8 @@
 find name~"^[a-z]+\d?$"
 find name~"prefix$varName\.\d+"
 find src-address~"(10|192)\."
+[find name~"\\.$currentQueue$"]
+[find ~"test"]
 
 ----------------------------------------------------
 
@@ -33,8 +35,10 @@ find src-address~"(10|192)\."
 		["operator", "~"],
 		["punctuation", "\""],
 		"prefix",
-		["anchor", "$"],
-		["variable", "varName"],
+		["variable", [
+			["substitution-operator", "$"],
+			"varName"
+		]],
 		["special-escape", "\\."],
 		["char-set", "\\d"],
 		["quantifier", "+"],
@@ -53,10 +57,42 @@ find src-address~"(10|192)\."
 		["group", ")"],
 		["special-escape", "\\."],
 		["punctuation", "\""]
-	]]
+	]],
+
+	["punctuation", "["],
+	["command-substitution", [
+		["command", "find"],
+		["regex", [
+			["parameter", "name"],
+			["operator", "~"],
+			["punctuation", "\""],
+			["special-escape", "\\\\"],
+			["char-set", "."],
+			["variable", [
+				["substitution-operator", "$"],
+				"currentQueue"
+			]],
+			["anchor", "$"],
+			["punctuation", "\""]
+		]]
+	]],
+	["punctuation", "]"],
+
+	["punctuation", "["],
+	["command-substitution", [
+		["command", "find"],
+		["regex", [
+			["operator", "~"],
+			["punctuation", "\""],
+			"test",
+			["punctuation", "\""]
+		]]
+	]],
+	["punctuation", "]"]
 ]
 
 ----------------------------------------------------
 
 Tests that the regex language is properly embedded inside MikroTik regex strings
-via `$rest: 'regex'`.
+via `$rest: 'regex'`. Also tests that `$` before variable names in regex strings
+is tokenized as `substitution-operator` (not as the regex `anchor` token).

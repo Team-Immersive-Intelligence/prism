@@ -53,3 +53,9 @@
 	]],
 	["punctuation", "]"]
 ]
+
+----------------------------------------------------
+
+Tests the `command-substitution` token: nested `[...]` substitutions (depth 2),
+global command substitution (`:len $var`), and menu path substitution
+(`/ip firewall address-list find`).

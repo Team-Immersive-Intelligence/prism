@@ -149,3 +149,9 @@
 	]],
 	["end-of-command", ";"]
 ]
+
+----------------------------------------------------
+
+Tests the `array` token: numeric arrays, key-value arrays, boolean arrays, IP address
+arrays, string arrays, arrays with escape sequences and variable interpolation inside
+string items, and multi-pair key-value arrays.

@@ -174,7 +174,7 @@ export default {
 				{
 					// Numeric values with unit suffixes (e.g., 1d, 2h30m, 45s, 500ms, 1w)
 					// Supports: s (seconds), m (minutes), h (hours), d (days), w (weeks), ms (milliseconds)
-					pattern: /\b\d+(?:[dhmsw]|ms)(?:\s*\d+(?:[dhmsw]|ms))*\b/i,
+					pattern: /\b\d+(?:[dhmsw]|ms)(?:[ \t]*\d+(?:[dhmsw]|ms))*\b/i,
 					alias: ['with-units', 'constant'],
 				},
 			],
@@ -417,8 +417,32 @@ export default {
 						alias: 'regex-operator',
 					},
 					'punctuation': /^"|"$/,
-					// Variables are interpolated inside regex strings, just like in regular strings
-					'variable': VARIABLE_PATTERNS,
+					// Variables are interpolated inside regex strings, just like in regular strings.
+					// Unlike VARIABLE_PATTERNS (which use lookbehind and leave `$` as a text node),
+					// these patterns include `$` in the match so it isn't claimed by the regex
+					// language's `anchor` token via `$rest: 'regex'`.
+					'variable': [
+						{
+							pattern: /\$"(?:[^"\\]|\\.)*"/,
+							greedy: true,
+							inside: {
+								'substitution-operator': {
+									pattern: /^\$/,
+									alias: 'operator',
+								},
+							},
+						},
+						{
+							pattern: /\$[a-z\d]+/i,
+							greedy: true,
+							inside: {
+								'substitution-operator': {
+									pattern: /^\$/,
+									alias: 'operator',
+								},
+							},
+						},
+					],
 					$rest: 'regex',
 				},
 			},
@@ -497,7 +521,7 @@ export default {
 					alias: ['print-parameter', 'property'],
 				},
 				{
-					pattern: new RegExp(`(?<=\\s)(?:${PRINT_PARAMETERS.join('|')})(?!\\s*=)`),
+					pattern: new RegExp(`(?<=\\s)(?:${PRINT_PARAMETERS.join('|')})(?![\\w-])(?!\\s*=)`),
 					alias: ['print-parameter', 'property'],
 				},
 				{

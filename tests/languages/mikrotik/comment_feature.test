@@ -14,3 +14,8 @@
 
 	["comment", "# indented comment"]
 ]
+
+----------------------------------------------------
+
+Tests the `comment` token: standalone line comments, inline comments after code,
+and indented comments.
