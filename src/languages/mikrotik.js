@@ -272,11 +272,12 @@ export default {
 
 			// Build depth-limited pattern recursively:
 			// content_0 = (?:atom)+
-			// content_k = (?: (?:atom)+ | opener content_{k-1} closer )+
+			// content_k = (?: atom | opener content_{k-1} closer )+
+			// Each outer iteration matches exactly one atom or one nested pair,
+			// avoiding nested quantifiers that cause exponential backtracking.
 			let prev = `(?:${atom})+`; // content_0
 			for (let level = 1; level <= depth; level++) {
-				// Each unit is either atoms or a nested pair; require one or more units
-				prev = `(?:(?:(?:${atom})+|(?:${openToken}${prev}${closeToken})))+`;
+				prev = `(?:(?:${atom})|(?:${openToken}${prev}${closeToken}))+`;
 			}
 
 			return new RegExp(
