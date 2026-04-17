@@ -1,0 +1,17 @@
+mov eax 10
+pop ebx
+
+----------------------------------------------------
+
+[
+	["op-code", "mov"],
+	["register", "eax"],
+	["decimal-number", "10"],
+
+	["op-code", "pop"],
+	["register", "ebx"]
+]
+
+----------------------------------------------------
+
+Check for registers

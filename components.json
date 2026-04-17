@@ -505,6 +505,10 @@
 			"require": "markup-templating",
 			"owner": "RunDevelopment"
 		},
+		"gasm": {
+			"title": "Gabriel's Assembly",
+			"owner": "Gabriel Void"
+		},
 		"gml": {
 			"title": "GameMaker Language",
 			"alias": "gamemakerlanguage",

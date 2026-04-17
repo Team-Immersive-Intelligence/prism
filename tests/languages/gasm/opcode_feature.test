@@ -1,0 +1,53 @@
+add
+sub
+cmp
+inc
+dec
+div
+mul
+jnz
+jz
+jns
+js
+mov
+push
+pop
+call
+ret
+end
+xor
+or
+shl
+shr
+and
+
+----------------------------------------------------
+
+[
+	["op-code", "add"],
+	["op-code", "sub"],
+	["op-code", "cmp"],
+	["op-code", "inc"],
+	["op-code", "dec"],
+	["op-code", "div"],
+	["op-code", "mul"],
+	["op-code", "jnz"],
+	["op-code", "jz"],
+	["op-code", "jns"],
+	["op-code", "js"],
+	["op-code", "mov"],
+	["op-code", "push"],
+	["op-code", "pop"],
+	["op-code", "call"],
+	["op-code", "ret"],
+	["op-code", "end"],
+	["op-code", "xor"],
+	["op-code", "or"],
+	["op-code", "shl"],
+	["op-code", "shr"],
+	["op-code", "and"]
+]
+
+----------------------------------------------------
+
+Check for opcodes

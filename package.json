@@ -1,5 +1,5 @@
 {
-	"name": "prismjs",
+	"name": "@team-immersive-intelligence/prismjs",
 	"version": "1.30.0",
 	"description": "Lightweight, robust, elegant syntax highlighting. A spin-off project from Dabblet.",
 	"main": "prism.js",
@@ -29,13 +29,19 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/PrismJS/prism.git"
+		"url": "git+https://github.com/Team-Immersive-Intelligence/prism.git"
 	},
 	"keywords": [
 		"prism",
 		"highlight"
 	],
 	"author": "Lea Verou",
+  "maintainers": [
+    {
+      "name": "Gabriel Void",
+      "email": "gabriel@iiteam.net"
+    }
+  ],
 	"license": "MIT",
 	"readmeFilename": "README.md",
 	"devDependencies": {
