@@ -1,4 +1,4 @@
-Prism.languages.asm6502 = {
+Prism.languages.gasm = {
 	'comment': /;.*/,
 	'op-code': {
 		pattern: /\b(?:add|sub|cmp|inc|dec|div|mul|jnz|jz|jns|js|mov|push|pop|call|ret|end|xor|or|shl|shr|and)\b/,
